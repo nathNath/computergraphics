@@ -109,3 +109,4 @@ So, what is a triangle? A triangle is a plane figure with three straight sides a
 <p>https://jansebp.wordpress.com/2012/12/16/icg-t1-rasterizacao/</p>
 <p>https://github.com/ThiagoLuizNunes/CG-Assignments/tree/master/cg_framework</p>
 <p>https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm</p>
+<p>https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#code</p>
