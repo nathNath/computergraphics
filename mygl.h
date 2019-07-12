@@ -26,7 +26,7 @@ void DrawLine(int x0, int y0, int x1, int y1, int red, int green, int blue, int 
     int y = y0;
         
     /* First quadrant (between 0 and 90 degrees) */
-    if(dx > 0 && dy > 0){
+    if(dx >= 0 && dy >= 0){
         
         /*First octet*/
         if(abs(dx) > abs(dy)){
@@ -68,7 +68,7 @@ void DrawLine(int x0, int y0, int x1, int y1, int red, int green, int blue, int 
         }
     }
     /* Second quadrant (between 90 and 180 degrees) */
-    else if(dx < 0 && dy > 0) {
+    else if(dx <= 0 && dy >= 0) {
         
         /* Third octet */
         if(abs(dx) < abs(dy)){
@@ -108,13 +108,13 @@ void DrawLine(int x0, int y0, int x1, int y1, int red, int green, int blue, int 
         }
     }
     /* Third quadrant (between 180 and 270 degrees) */
-    else if (dx < 0 && dy < 0) {
+    else if (dx <= 0 && dy <= 0) {
         
         /* Fifth and Sixth Octets */
         DrawLine(y1, x1, y0, x0, red, green, blue, alpha);
     } 
     /* Fourth quadrant (between 270 and 360 degrees) */
-    else if(dx > 0 && dy < 0){
+    else if(dx >= 0 && dy <= 0){
         
         /* Seventh and Eighth Octets*/
         DrawLine(x1, y1, x0, y0, red, green, blue, alpha);
@@ -122,8 +122,12 @@ void DrawLine(int x0, int y0, int x1, int y1, int red, int green, int blue, int 
     }
 }
 
-void DrawTriangle(int xa, int xb, int xc, int ya, int yb, int yc, int red, int green, int blue, int alpha){
+void DrawTriangle(int xa0, int ya0, int xa1, int ya1, int xb0, int yb0, int xb1, int yb1, int xc0, int yc0, int xc1, int yc1,
+                  int red, int green, int blue, int alpha){
     
+    DrawLine(xa0,ya0,xa1,ya1,red,green,blue,alpha);
+    DrawLine(xb0,yb0,xb1,yb1,red,green,blue,alpha);
+    DrawLine(xc0,yc0,xc1,yc1,red,green,blue,alpha);
 }
 
 #endif // _MYGL_H_
