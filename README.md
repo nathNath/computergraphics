@@ -35,8 +35,67 @@ void PutPixel(int x, int y, int red, int green, int blue, int alpha){
 
 In order to draw lines, Bresenham's algorithm should be used to complete this task. Its main advantage, compared to DDA (Differential Digital Analyzer), is that we handle integer values and the operations involved are SUM and SUB, instructions which are not considered expensive to Assembly. 
 
+This algorithm is used to decide which pixels should be turned on in order to result on a line. Imagine that you have drawn the first pixel of your line. You have to turn on the next pixel, but should it be the one in the east (E) or the one in the northeast (NE)? If the decision variable, denoted as "delta" on my implementation, is greater than zero, we should turn on the pixel in the NE. Else, E. If delta equals zero, then you should choose whichever you prefer.
+
+<p align="center">
+	<br>
+	<img src="./printscreens/Bresenham.png"/ width=512px height=512px>
+	<h5 align="center">Figure 2 - Result of DrawLine()</h5>
+	<br>
+</p>
+
+Now, let's take a look at the first quadrant that involves angles between 0 and 90 degrees:
+
+```
+if(dx > 0 && dy > 0){
+        
+        /*First octet*/
+        if(abs(dx) > abs(dy)){
+           delta = 2*dy - dx;
+           east = 2*dy;
+           northeast = 2*(dy-dx); 
+
+           while(x < x1){    
+               if(delta <= 0){
+                   delta += east;
+                   x++;
+               } else {
+                   delta += northeast;
+                   x++;
+                   y++;
+               }
+               PutPixel(x, y, red, green, blue, alpha);
+           }
+
+        } 
+        /* Second octet */
+        else {
+            delta = dy - 2*dx;
+            east = 2*(dy-dx);
+            northeast = -2*dx;
+
+            while(abs(y) < abs(y1)){
+                if(delta <= 0){
+                    delta += east;
+                    x++;
+                    y++;
+                } else {
+                    delta += northeast;
+                    y++;
+                }
+
+                PutPixel(x, y, red, green, blue, alpha);
+            }
+        }
+    }
+
+```
+
+You should be able to realize that if delta equals or is lower than zero, the chosen pixel should be the one located in the NE. Else, E. You should be careful with the location of the E and NE of each octet. I messed up with it a lot until I finally figured things out. After you complete the first four octets, the other ones should be seen as mirrors, but you have to pay attention to the fact that for the fifth and sixth octets, x0 becomes y1, y0 becomes x1, x1 becomes y0 and y1 becomes y0. The seventh and eight octets should handle the following particularities: x0 becomes x1, y0 becomes y1, x1 becomes x0 and y1 becomes y0. Knowing this, the function DrawLine() can be called recursively.  
+
 
 # references
-http://www.codebind.com/linux-tutorials/install-opengl-ubuntu-linux/
-https://jansebp.wordpress.com/2012/12/16/icg-t1-rasterizacao/
-https://github.com/ThiagoLuizNunes/CG-Assignments/tree/master/cg_framework
+<p>http://www.codebind.com/linux-tutorials/install-opengl-ubuntu-linux/</p>
+<p>https://jansebp.wordpress.com/2012/12/16/icg-t1-rasterizacao/</p>
+<p>https://github.com/ThiagoLuizNunes/CG-Assignments/tree/master/cg_framework</p>
+<p>https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm</p>
