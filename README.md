@@ -7,7 +7,7 @@ What does it mean? So, basically, rasterizing is the technique used to draw stuf
 
 > Approximation of mathematical primitives, described in terms of vertices on a Cartesian grid, by sets of pixels of the appropriate intensity of gray or color.
 
-We have a memory full of info about our pixels, but how does the video card **really** gets that info stored on memory and knows which pixels should be turned on or off? Imagine our memory video working as a giant array. For this example, I will consider a screen that has 512 pixels through its x-axis or w (width) and 512 pixels through its y-axis or h (height). If I want to turn on a red pixel in the center of the screen, I should specify its coordinate as (255,255) and its color as (255,0,0,255). You'll have to keep in mind that the (0,0) starts on the superior leftmost point of your screen. 
+We have a memory full of info about our pixels, but how does the video card **really** gets that info stored on memory and knows which pixels should be turned on or off? Imagine our memory video working as a giant array. For this example, I will consider a screen that has 512 pixels through its x-axis or w (width) and 512 pixels through its y-axis or h (height). If I want to turn on a red pixel in the center of the screen, I should specify its coordinates as (255,255) and its color as (255,0,0,255). You'll have to keep in mind that the (0,0) starts on the superior leftmost point of your screen. 
 
 ## pixels
 
@@ -47,7 +47,7 @@ This algorithm is used to decide which pixels should be turned on in order to re
 Now, let's take a look at the first quadrant that involves angles between 0 and 90 degrees:
 
 ```
-if(dx > 0 && dy > 0){
+if(dx >= 0 && dy >= 0){
         
         /*First octet*/
         if(abs(dx) > abs(dy)){
@@ -93,6 +93,16 @@ if(dx > 0 && dy > 0){
 
 You should be able to realize that if delta equals or is lower than zero, the chosen pixel should be the one located in the NE. Else, E. You should be careful with the location of the E and NE of each octet. I messed up with it a lot until I finally figured things out. After you complete the first four octets, the other ones should be seen as mirrors, but you have to pay attention to the fact that for the fifth and sixth octets, x0 becomes y1, y0 becomes x1, x1 becomes y0 and y1 becomes y0. The seventh and eight octets should handle the following particularities: x0 becomes x1, y0 becomes y1, x1 becomes x0 and y1 becomes y0. Knowing this, the function DrawLine() can be called recursively.  
 
+## triangles
+
+So, what is a triangle? A triangle is a plane figure with three straight sides and three angles. We can interpret those sides as lines. Inside the DrawTriangle function, you can see that we should call DrawLine() three times, for each line to be drawn. I have drawn two triangles, red and fuchsia ones, in order to demonstrante its operation.
+
+<p align="center">
+	<br>
+	<img src="./printscreens/DrawTriangle.png"/ width=512px height=512px>
+	<h5 align="center">Figure 3 - Result of DrawTriangle()</h5>
+	<br>
+</p>
 
 # references
 <p>http://www.codebind.com/linux-tutorials/install-opengl-ubuntu-linux/</p>
