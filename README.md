@@ -91,7 +91,7 @@ if(dx >= 0 && dy >= 0){
 
 ```
 
-You should be able to realize that if delta equals or is lower than zero, the chosen pixel should be the one located in the NE. Else, E. You should be careful with the location of the E and NE of each octet. I messed up with it a lot until I finally figured things out. After you complete the first four octets, the other ones should be seen as mirrors, but you have to pay attention to the fact that for the fifth and sixth octets, x0 becomes y1, y0 becomes x1, x1 becomes y0 and y1 becomes y0. The seventh and eight octets should handle the following particularities: x0 becomes x1, y0 becomes y1, x1 becomes x0 and y1 becomes y0. Knowing this, the function DrawLine() can be called recursively.  
+You should be able to realize that if delta equals or is lower than zero, the chosen pixel should be the one located in the NE. Else, E. You should be careful with the location of the E and NE of each octet. I messed up with it a lot until I finally figured things out. After you complete the first four octets, the other ones should be seen as mirrors, but you have to pay attention to the fact that for the fifth and sixth octets, x0 becomes y1, y0 becomes x1, x1 becomes y0 and y1 becomes y0. The seventh and eighth octets should handle the following particularities: x0 becomes x1, y0 becomes y1, x1 becomes x0 and y1 becomes y0. Knowing this, the function DrawLine() can be called recursively.  
 
 ## Triangles
 
